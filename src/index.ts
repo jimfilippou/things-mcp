@@ -21,6 +21,11 @@ async function openThingsURL(url: string): Promise<void> {
   }
 }
 
+// URLSearchParams encodes spaces as '+', but Things URL scheme expects '%20'
+function buildThingsQueryString(params: URLSearchParams): string {
+  return params.toString().replace(/\+/g, "%20");
+}
+
 server.tool(
   "add-todo",
   {
@@ -124,7 +129,7 @@ server.tool(
     if (params["completion-date"])
       urlParams.set("completion-date", params["completion-date"]);
 
-    const url = `things:///add?${urlParams.toString()}`;
+    const url = `things:///add?${buildThingsQueryString(urlParams)}`;
     await openThingsURL(url);
 
     const todoName = params.titles
@@ -212,7 +217,7 @@ server.tool(
     if (params["completion-date"])
       urlParams.set("completion-date", params["completion-date"]);
 
-    const url = `things:///add-project?${urlParams.toString()}`;
+    const url = `things:///add-project?${buildThingsQueryString(urlParams)}`;
     await openThingsURL(url);
 
     return {
@@ -337,7 +342,7 @@ server.tool(
     if (params["completion-date"])
       urlParams.set("completion-date", params["completion-date"]);
 
-    const url = `things:///update?${urlParams.toString()}`;
+    const url = `things:///update?${buildThingsQueryString(urlParams)}`;
     await openThingsURL(url);
 
     return {
@@ -434,7 +439,7 @@ server.tool(
     if (params["completion-date"])
       urlParams.set("completion-date", params["completion-date"]);
 
-    const url = `things:///update-project?${urlParams.toString()}`;
+    const url = `things:///update-project?${buildThingsQueryString(urlParams)}`;
     await openThingsURL(url);
 
     return {
@@ -476,7 +481,7 @@ server.tool(
       urlParams.set("filter", params.filter.join(","));
     }
 
-    const url = `things:///show?${urlParams.toString()}`;
+    const url = `things:///show?${buildThingsQueryString(urlParams)}`;
     await openThingsURL(url);
 
     const target = params.id || params.query || "Things";
@@ -500,7 +505,7 @@ server.tool(
     const urlParams = new URLSearchParams();
     if (params.query) urlParams.set("query", params.query);
 
-    const url = `things:///search?${urlParams.toString()}`;
+    const url = `things:///search?${buildThingsQueryString(urlParams)}`;
     await openThingsURL(url);
 
     return {
@@ -564,7 +569,7 @@ server.tool(
       urlParams.set("reveal", params.reveal.toString());
     }
 
-    const url = `things:///json?${urlParams.toString()}`;
+    const url = `things:///json?${buildThingsQueryString(urlParams)}`;
     await openThingsURL(url);
 
     return {
