@@ -15,6 +15,10 @@ A Model Context Protocol (MCP) server that provides seamless integration with th
 - ✅ **Search & Navigation** - Find and show specific items or lists
 - ✅ **Proper URL Encoding** - Handles special characters and spaces correctly
 
+## Hosted deployment
+
+A hosted deployment is available on [Fronteir AI](https://fronteir.ai/mcp/jimfilippou-things-mcp).
+
 ## Prerequisites
 
 - **macOS** - Required for Things app integration
